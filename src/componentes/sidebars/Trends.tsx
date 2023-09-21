@@ -35,7 +35,7 @@ const trends = [
   },
 ];
 
-const Trends: Component = () => {
+const TrendsSidebar: Component = () => {
   return (
     <div class='bg-gray-800 overflow-hidden flex-it rounded-2xl'>
       <div class='flex-it p-4'>
@@ -58,4 +58,4 @@ const Trends: Component = () => {
   );
 };
 
-export default Trends;
+export default TrendsSidebar;
