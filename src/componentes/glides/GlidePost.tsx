@@ -2,18 +2,7 @@ import { Component } from 'solid-js';
 import { AiOutlineMessage } from 'solid-icons/ai';
 import { FiTrash } from 'solid-icons/fi';
 import { FaRegularHeart } from 'solid-icons/fa';
-
-type Glide = {
-  id: string;
-  content: string;
-  user: {
-    nickName: string;
-    avatar: string;
-  };
-  likesCount: number;
-  subglidesCount: number;
-  date: Date;
-};
+import { Glide } from '../../types/Glide';
 
 const GlidePost: Component<{ glide: Glide }> = (props) => {
   return (

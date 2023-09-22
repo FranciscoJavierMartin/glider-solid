@@ -2,18 +2,7 @@ import { Component, For, createSignal, createUniqueId } from 'solid-js';
 import { FaRegularImage } from 'solid-icons/fa';
 import MainLayout from './layouts/Main';
 import GlidePost from './componentes/glides/GlidePost';
-
-type Glide = {
-  id: string;
-  content: string;
-  user: {
-    nickName: string;
-    avatar: string;
-  };
-  likesCount: number;
-  subglidesCount: number;
-  date: Date;
-};
+import { Glide } from './types/Glide';
 
 const App: Component = () => {
   const [content, setContent] = createSignal<string>('');
