@@ -1,23 +1,8 @@
 import { Component } from 'solid-js';
-import HomeScreen from './screens/Home';
-import LoginScreen from './screens/Login';
-import RegisterScreen from './screens/Register';
+import AppRoutes from './router';
 
 const App: Component = () => {
-  return (
-    <RegisterScreen />
-    // <Router>
-    //   <Route to='/'>
-    //     <HomeScreen />
-    //   </Route>
-    //   <Route to='/login'>
-    //     <LoginScreen />
-    //   </Route>
-    //   <Route to='/register'>
-    //     <RegisterScreen />
-    //   </Route>
-    // </Router>
-  );
+  return <AppRoutes />;
 };
 
 export default App;
