@@ -1,10 +1,8 @@
-import { Component } from 'solid-js';
-import { CgProfile, CgMoreO } from 'solid-icons/cg';
-import { IoNotificationsCircleOutline } from 'solid-icons/io';
-import { RiMapCompassDiscoverLine } from 'solid-icons/ri';
-import { AiOutlineHome } from 'solid-icons/ai';
+import { A } from '@solidjs/router';
+import { Component, For } from 'solid-js';
 import { FiMoreHorizontal } from 'solid-icons/fi';
 import { HiOutlinePencilSquare } from 'solid-icons/hi';
+import { links } from './links';
 
 const MainSidebar: Component = () => {
   return (
@@ -14,62 +12,29 @@ const MainSidebar: Component = () => {
           <div class='flex-it h-full xl:w-80 w-20 overflow-y-auto px-3 justify-between'>
             <div class='flex-it items-center xl:items-start'>
               <div class='p-3 pt-4 xl:pb-3 pb-0 xl:text-2xl text-sm font-bold transition duration-200 hover:opacity-80'>
-                <a href='#'>
+                <A href='#'>
                   <h1>Glider</h1>
-                </a>
+                </A>
               </div>
               <div class='my-1 w-full flex-it'>
                 <nav class='flex-it items-start'>
-                  <a class='flex-it items-start flex-grow w-full' href='#'>
-                    <div class='p-3 flex-row justify-center items-center flex-it rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200'>
-                      <div class='flex-it'>
-                        <AiOutlineHome size={24} />
-                      </div>
-                      <div class='mx-4 text-2xl truncate xl:block hidden'>
-                        <span class='truncate'>Home</span>
-                      </div>
-                    </div>
-                  </a>
-                  <a class='flex-it items-start flex-grow w-full' href='#'>
-                    <div class='p-3 flex-row justify-center items-center flex-it rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200'>
-                      <div class='flex-it'>
-                        <CgProfile size={24} />
-                      </div>
-                      <div class='mx-4 text-2xl truncate xl:block hidden'>
-                        <span class='truncate'>Profile</span>
-                      </div>
-                    </div>
-                  </a>
-                  <a class='flex-it items-start flex-grow w-full' href='#'>
-                    <div class='p-3 flex-row justify-center items-center flex-it rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200'>
-                      <div class='flex-it'>
-                        <CgMoreO size={24} />
-                      </div>
-                      <div class='mx-4 text-2xl truncate xl:block hidden'>
-                        <span class='truncate'>More</span>
-                      </div>
-                    </div>
-                  </a>
-                  <a class='flex-it items-start flex-grow w-full' href='#'>
-                    <div class='p-3 flex-row justify-center items-center flex-it rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200'>
-                      <div class='flex-it'>
-                        <IoNotificationsCircleOutline size={24} />
-                      </div>
-                      <div class='mx-4 text-2xl truncate xl:block hidden'>
-                        <span class='truncate'>Notification</span>
-                      </div>
-                    </div>
-                  </a>
-                  <a class='flex-it items-start flex-grow w-full' href='#'>
-                    <div class='p-3 flex-row justify-center items-center flex-it rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200'>
-                      <div class='flex-it'>
-                        <RiMapCompassDiscoverLine size={24} />
-                      </div>
-                      <div class='mx-4 text-2xl truncate xl:block hidden'>
-                        <span class='truncate'>Discover</span>
-                      </div>
-                    </div>
-                  </a>
+                  <For each={links}>
+                    {(Link) => (
+                      <A
+                        class='flex-it items-start flex-grow w-full'
+                        href={Link.href}
+                      >
+                        <div class='p-3 flex-row justify-center items-center flex-it rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200'>
+                          <div class='flex-it'>
+                            <Link.icon size={24} />
+                          </div>
+                          <div class='mx-4 text-2xl truncate xl:block hidden'>
+                            <span class='truncate'>{Link.name}</span>
+                          </div>
+                        </div>
+                      </A>
+                    )}
+                  </For>
                 </nav>
               </div>
               {/* GLIDER SEND-MESSAGE BUTTON */}
