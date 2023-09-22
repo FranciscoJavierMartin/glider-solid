@@ -1,10 +1,45 @@
-import { Component } from 'solid-js';
+import { Component, createSignal, createUniqueId } from 'solid-js';
 import { AiOutlineMessage } from 'solid-icons/ai';
 import { FiTrash } from 'solid-icons/fi';
 import { FaRegularImage, FaRegularHeart } from 'solid-icons/fa';
 import MainLayout from './layouts/Main';
 
+type Glide = {
+  id: string;
+  content: string;
+  user: {
+    nickName: string;
+    avatar: string;
+  };
+  likesCount: number;
+  subglidesCount: number;
+  date: Date;
+};
+
 const App: Component = () => {
+  const [content, setContent] = createSignal<string>('');
+  const [glides, setGlides] = createSignal<Glide[]>([]);
+
+  const createGlide = () => {
+    setGlides((prevGlides) => [
+      {
+        id: createUniqueId(),
+        content: content(),
+        user: {
+          nickName: 'John',
+          avatar:
+            'https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png',
+        },
+        likesCount: 0,
+        subglidesCount: 0,
+        date: new Date(),
+      },
+      ...prevGlides,
+    ]);
+
+    setContent('');
+  };
+
   return (
     <MainLayout>
       {/* HOME PAGE START */}
@@ -21,6 +56,10 @@ const App: Component = () => {
         <div class='flex-it flex-grow'>
           <div class='flex-it'>
             <textarea
+              onInput={(event) => {
+                setContent(event.currentTarget.value);
+              }}
+              value={content()}
               name='content'
               rows='1'
               id='glide'
@@ -37,6 +76,7 @@ const App: Component = () => {
             </div>
             <div class='flex-it w-32 mt-3 cursor-pointer'>
               <button
+                onClick={createGlide}
                 type='button'
                 class='
                             disabled:cursor-not-allowed disabled:bg-gray-400
