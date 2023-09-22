@@ -5,7 +5,7 @@ import RegisterScreen from './screens/Register';
 
 const App: Component = () => {
   return (
-    <LoginScreen />
+    <RegisterScreen />
     // <Router>
     //   <Route to='/'>
     //     <HomeScreen />
