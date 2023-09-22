@@ -1,3 +1,4 @@
+import { A } from '@solidjs/router';
 import { Component, For } from 'solid-js';
 import { FiMoreHorizontal } from 'solid-icons/fi';
 import { HiOutlinePencilSquare } from 'solid-icons/hi';
@@ -11,15 +12,15 @@ const MainSidebar: Component = () => {
           <div class='flex-it h-full xl:w-80 w-20 overflow-y-auto px-3 justify-between'>
             <div class='flex-it items-center xl:items-start'>
               <div class='p-3 pt-4 xl:pb-3 pb-0 xl:text-2xl text-sm font-bold transition duration-200 hover:opacity-80'>
-                <a href='#'>
+                <A href='#'>
                   <h1>Glider</h1>
-                </a>
+                </A>
               </div>
               <div class='my-1 w-full flex-it'>
                 <nav class='flex-it items-start'>
                   <For each={links}>
                     {(Link) => (
-                      <a
+                      <A
                         class='flex-it items-start flex-grow w-full'
                         href={Link.href}
                       >
@@ -31,7 +32,7 @@ const MainSidebar: Component = () => {
                             <span class='truncate'>{Link.name}</span>
                           </div>
                         </div>
-                      </a>
+                      </A>
                     )}
                   </For>
                 </nav>
