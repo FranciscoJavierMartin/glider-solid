@@ -34,15 +34,21 @@ const Popup: Component<PopupProps> = ({ opener: Opener }) => {
   });
 
   const adjustPopup = () => {
-    const position = followTo.getBoundingClientRect();
-    popup.style.left = position.left + 'px';
-    popup.style.bottom = followTo.clientHeight + 'px';
+    if (popup) {
+      const position = followTo.getBoundingClientRect();
+      popup.style.left = position.left + 'px';
+      popup.style.bottom = followTo.clientHeight + 'px';
+    }
   };
 
-  const closePopup = () => {
-    if (isOpen()) {
+  const closePopup = (e: MouseEvent) => {
+    if (isOpen() && !isPopupClicked(e)) {
       setIsOpen(false);
     }
+  };
+
+  const isPopupClicked = (e: MouseEvent): boolean => {
+    return popup?.contains(e.target as Node);
   };
 
   return (
