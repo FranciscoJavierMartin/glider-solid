@@ -1,6 +1,6 @@
 import { ParentComponent } from 'solid-js';
-import MainSidebar from '../componentes/sidebars/Main';
-import TrendsSidebar from '../componentes/sidebars/Trends';
+import MainSidebar from '../components/sidebars/Main';
+import TrendsSidebar from '../components/sidebars/Trends';
 
 const MainLayout: ParentComponent = (props) => {
   return (
