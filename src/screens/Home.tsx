@@ -1,6 +1,6 @@
 import { Component, For, createSignal, createUniqueId } from 'solid-js';
 import { FaRegularImage } from 'solid-icons/fa';
-import MainLayout from '../layouts/Main';
+import MainLayout from '../layouts/MainLayout';
 import GlidePost from '../components/glides/GlidePost';
 import { Glide } from '../types/glide';
 import { useAuthState } from '../context/auth';
