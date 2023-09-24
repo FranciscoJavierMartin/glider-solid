@@ -1,7 +1,7 @@
 import { Component, For, createSignal, createUniqueId } from 'solid-js';
 import { FaRegularImage } from 'solid-icons/fa';
 import MainLayout from '../layouts/Main';
-import GlidePost from '../componentes/glides/GlidePost';
+import GlidePost from '../components/glides/GlidePost';
 import { Glide } from '../types/glide';
 
 const HomeScreen: Component = () => {
@@ -37,7 +37,7 @@ const HomeScreen: Component = () => {
             <img
               class='rounded-full'
               src='https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png'
-            ></img>
+            />
           </div>
         </div>
         {/* MESSENGER START */}
