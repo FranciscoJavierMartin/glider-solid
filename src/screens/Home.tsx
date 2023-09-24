@@ -1,10 +1,4 @@
-import {
-  Component,
-  For,
-  createSignal,
-  createUniqueId,
-  onMount,
-} from 'solid-js';
+import { Component, For, createSignal, createUniqueId } from 'solid-js';
 import { FaRegularImage } from 'solid-icons/fa';
 import MainLayout from '../layouts/Main';
 import GlidePost from '../components/glides/GlidePost';
@@ -15,10 +9,6 @@ const HomeScreen: Component = () => {
   const [content, setContent] = createSignal<string>('');
   const [glides, setGlides] = createSignal<Glide[]>([]);
   const authState = useAuthState()!;
-
-  onMount(() => {
-    authState.setIsAuthenticated(true);
-  });
 
   const createGlide = () => {
     setGlides((prevGlides) => [
