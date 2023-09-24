@@ -1,9 +1,11 @@
 import { A } from '@solidjs/router';
-import { Component, For } from 'solid-js';
+import { Component, For, Show } from 'solid-js';
 import { FiMoreHorizontal } from 'solid-icons/fi';
 import { HiOutlinePencilSquare } from 'solid-icons/hi';
 import { links } from './links';
 import Popup from '../utils/Popup';
+import pageSize from '../../reactive/pageSize';
+import { RiDesignQuillPenLine } from 'solid-icons/ri';
 
 const MainSidebar: Component = () => {
   return (
@@ -39,15 +41,17 @@ const MainSidebar: Component = () => {
                 </nav>
               </div>
               {/* GLIDER SEND-MESSAGE BUTTON */}
-              <div class='my-1 flex-it w-10/12 cursor-pointer items-center xl:items-stretch'>
-                <div class='bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full flex-it transition hidden xl:flex'>
+              <div class='my-1 flex-it w-10/12 cursor-pointer'>
+                <div class='bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full flex-it transition'>
                   <div class='flex-it flex-row text-xl font-bold text-white items-start justify-center truncate duration-200'>
-                    <div>Glide It</div>
+                    <Show
+                      when={pageSize.isXL()}
+                      fallback={<RiDesignQuillPenLine />}
+                    >
+                      <div>Glide It</div>
+                    </Show>
                   </div>
                 </div>
-                <button class='bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full flex-it transition h-8 w-8 flex justify-center items-center xl:hidden'>
-                  <HiOutlinePencilSquare class='h-5 w-5' />
-                </button>
               </div>
             </div>
             {/* PROFILE MENU */}
