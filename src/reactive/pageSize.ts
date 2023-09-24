@@ -26,7 +26,7 @@ const pageSize = () => {
   const isXL = () => value().width > 1280;
   const isLG = () => value().width > 1024;
 
-  return { isXL, isLG };
+  return { isXL, isLG, value };
 };
 
 export default createRoot(pageSize);
