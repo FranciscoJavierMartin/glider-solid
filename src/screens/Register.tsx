@@ -1,9 +1,10 @@
-import { Component, createSignal } from 'solid-js';
+import { Component } from 'solid-js';
 import { A } from '@solidjs/router';
-import { GliderInputEvent, SubmitFormEvent } from '../types/form';
+import { GliderInputEvent, RegisterForm, SubmitFormEvent } from '../types/form';
+import { createStore } from 'solid-js/store';
 
 const RegisterScreen: Component = () => {
-  const [form, setForm] = createSignal({
+  const [form, setForm] = createStore<RegisterForm>({
     fullName: '',
     nickName: '',
     email: '',
@@ -14,7 +15,7 @@ const RegisterScreen: Component = () => {
 
   const handleInput = (e: GliderInputEvent): void => {
     const { name, value } = e.currentTarget;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm(name as keyof RegisterForm, value);
   };
 
   const submitForm = (e: SubmitFormEvent) => {
