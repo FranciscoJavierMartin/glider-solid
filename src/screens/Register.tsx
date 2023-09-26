@@ -1,10 +1,9 @@
 import { Component } from 'solid-js';
 import { A } from '@solidjs/router';
-import { GliderInputEvent, RegisterForm, SubmitFormEvent } from '../types/form';
-import { createStore } from 'solid-js/store';
+import useForm from '../hooks/useForm';
 
 const RegisterScreen: Component = () => {
-  const [form, setForm] = createStore<RegisterForm>({
+  const { handleInput, submitForm } = useForm({
     fullName: '',
     nickName: '',
     email: '',
@@ -13,22 +12,14 @@ const RegisterScreen: Component = () => {
     passwordConfirmation: '',
   });
 
-  const handleInput = (e: GliderInputEvent): void => {
-    const { name, value } = e.currentTarget;
-    setForm(name as keyof RegisterForm, value);
-  };
-
-  const submitForm = (e: SubmitFormEvent) => {
-    e.preventDefault();
-    console.log('Hello');
-  };
+  const onFormSubmit = (form: any) => {};
 
   return (
     <div class='flex-it justify-center items-center h-full'>
       <div class='text-white text-4xl font-bold'>Glider - Create Account</div>
       <div class='mt-10 flex-it h-100 xs:w-100 w-full bg-white p-10 rounded-2xl'>
         <div class='flex-it'>
-          <form class='flex-it' onSubmit={submitForm}>
+          <form class='flex-it' onSubmit={submitForm(onFormSubmit)}>
             <div class='flex-it overflow-hidden sm:rounded-md'>
               <div class='flex-it'>
                 <div class='flex-it'>

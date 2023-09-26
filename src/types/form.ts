@@ -18,3 +18,5 @@ export type RegisterForm = {
   avatar: string;
   passwordConfirmation: string;
 };
+
+export type SubmitCallback = (f: any) => void;
