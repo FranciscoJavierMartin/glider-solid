@@ -1,9 +1,10 @@
 import { Component } from 'solid-js';
 import { A } from '@solidjs/router';
 import useForm from '../hooks/useForm';
+import { RegisterForm } from '../types/form';
 
 const RegisterScreen: Component = () => {
-  const { handleInput, submitForm } = useForm({
+  const { handleInput, submitForm } = useForm<RegisterForm>({
     fullName: '',
     nickName: '',
     email: '',
@@ -12,7 +13,7 @@ const RegisterScreen: Component = () => {
     passwordConfirmation: '',
   });
 
-  const onFormSubmit = (form: any) => {};
+  const onFormSubmit = (form: RegisterForm) => {};
 
   return (
     <div class='flex-it justify-center items-center h-full'>
