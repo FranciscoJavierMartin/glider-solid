@@ -7,10 +7,7 @@ const AuthLayout: Component = () => {
   const navigate = useNavigate();
 
   onMount(() => {
-    console.log('Login out');
-
     if (!authState.isAuthenticated) {
-      console.log('Login in');
       navigate('/auth/login', { replace: true });
     }
   });

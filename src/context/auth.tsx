@@ -30,7 +30,6 @@ const AuthProvider: ParentComponent = (props) => {
       await authenticateUser();
       setStore('isAuthenticated', true);
     } catch (error) {
-      console.log('hello');
       setStore('isAuthenticated', false);
     } finally {
       setStore('isLoading', false);
@@ -40,8 +39,8 @@ const AuthProvider: ParentComponent = (props) => {
   const authenticateUser = async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(true);
-        // reject('Fail');
+        // resolve(true);
+        reject('Fail');
       }, 1000);
     });
   };

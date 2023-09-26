@@ -1,13 +1,33 @@
-import { Component } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
 import { A } from '@solidjs/router';
+import { GliderInputEvent, SubmitFormEvent } from '../types/form';
 
 const RegisterScreen: Component = () => {
+  const [form, setForm] = createSignal({
+    fullName: '',
+    nickName: '',
+    email: '',
+    password: '',
+    avatar: '',
+    passwordConfirmation: '',
+  });
+
+  const handleInput = (e: GliderInputEvent): void => {
+    const { name, value } = e.currentTarget;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const submitForm = (e: SubmitFormEvent) => {
+    e.preventDefault();
+    console.log('Hello');
+  };
+
   return (
     <div class='flex-it justify-center items-center h-full'>
       <div class='text-white text-4xl font-bold'>Glider - Create Account</div>
       <div class='mt-10 flex-it h-100 xs:w-100 w-full bg-white p-10 rounded-2xl'>
         <div class='flex-it'>
-          <form class='flex-it'>
+          <form class='flex-it' onSubmit={submitForm}>
             <div class='flex-it overflow-hidden sm:rounded-md'>
               <div class='flex-it'>
                 <div class='flex-it'>
@@ -19,6 +39,7 @@ const RegisterScreen: Component = () => {
                       type='text'
                       name='fullName'
                       id='fullName'
+                      onInput={handleInput}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                     <div class='flex-it grow text-xs bg-red-400 text-white p-3 pl-3 mt-1 rounded-md'>
@@ -34,6 +55,7 @@ const RegisterScreen: Component = () => {
                       type='text'
                       name='nickName'
                       id='nickName'
+                      onInput={handleInput}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                   </div>
@@ -46,6 +68,7 @@ const RegisterScreen: Component = () => {
                       type='text'
                       name='email'
                       id='email'
+                      onInput={handleInput}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                   </div>
@@ -58,6 +81,7 @@ const RegisterScreen: Component = () => {
                       type='text'
                       name='avatar'
                       id='avatar'
+                      onInput={handleInput}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                   </div>
@@ -70,6 +94,7 @@ const RegisterScreen: Component = () => {
                       type='password'
                       name='password'
                       id='password'
+                      onInput={handleInput}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                   </div>
@@ -82,6 +107,7 @@ const RegisterScreen: Component = () => {
                       type='password'
                       name='passwordConfirmation'
                       id='passwordConfirmation'
+                      onInput={handleInput}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                   </div>
@@ -95,7 +121,7 @@ const RegisterScreen: Component = () => {
               </div>
               <div class='flex-it py-2'>
                 <button
-                  type='button'
+                  type='submit'
                   class='
                   bg-blue-400 hover:bg-blue-500 focus:ring-0
                   disabled:cursor-not-allowed disabled:bg-gray-400
