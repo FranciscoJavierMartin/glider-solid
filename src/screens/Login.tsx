@@ -40,7 +40,7 @@ const LoginScreen: Component = () => {
               </div>
               <div class='text-sm text-gray-600 pb-4'>
                 No Account Yet?{' '}
-                <A class='hover:underline' href='#'>
+                <A class='hover:underline' href='/auth/register'>
                   Create a new account
                 </A>
               </div>
