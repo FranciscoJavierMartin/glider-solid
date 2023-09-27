@@ -17,12 +17,22 @@ declare module 'solid-js' {
 
 type Validator = (element: HTMLInputElement, ...rest: any[]) => string;
 
-export const maxLengthValidator = (
+export const maxLengthValidator: Validator = (
   element: HTMLInputElement,
   maxLength: number = 7
 ): string => {
   return !(element.value.length === 0 || element.value.length < maxLength)
     ? `${element.name} should be less than ${maxLength} characters`
+    : '';
+};
+
+export const firstUppercaseLetter: Validator = (element: HTMLInputElement) => {
+  const { value } = element;
+
+  return value.length
+    ? ''
+    : value[0] !== value[0].toLocaleUpperCase()
+    ? `${element.name} first letter should be uppercased`
     : '';
 };
 
