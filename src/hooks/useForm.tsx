@@ -10,10 +10,21 @@ import {
 declare module 'solid-js' {
   namespace JSX {
     interface Directives {
-      validate: number;
+      validate: Validator[];
     }
   }
 }
+
+type Validator = (element: HTMLInputElement, ...rest: any[]) => string;
+
+export const maxLengthValidator = (
+  element: HTMLInputElement,
+  maxLength: number = 7
+): string => {
+  return !(element.value.length === 0 || element.value.length < maxLength)
+    ? `${element.name} should be less than ${maxLength} characters`
+    : '';
+};
 
 const useForm = <T extends Form>(initialForm: T) => {
   const [form, setForm] = createStore<T>(initialForm);
@@ -30,30 +41,24 @@ const useForm = <T extends Form>(initialForm: T) => {
       submitCallback(form);
     };
 
-  const validate = (ref: HTMLInputElement, accessor: Accessor<number>) => {
-    const value = accessor();
+  const validate = (ref: HTMLInputElement, accessor: Accessor<Validator[]>) => {
+    const validators = accessor() || [];
 
-    ref.onblur = checkValidity(ref);
+    ref.onblur = checkValidity(ref, validators);
   };
 
-  const maxLengthValidator = (
-    element: HTMLInputElement,
-    maxLength: number = 7
-  ): string => {
-    return !(element.value.length === 0 || element.value.length < maxLength)
-      ? `${element.name} should be less than ${maxLength} characters`
-      : '';
-  };
+  const checkValidity =
+    (element: HTMLInputElement, validators: Validator[]) => () => {
+      for (const validator of validators) {
+        const message: string = maxLengthValidator(element, 10);
 
-  const checkValidity = (element: HTMLInputElement) => () => {
-    const message: string = maxLengthValidator(element, 10);
-
-    if (!message) {
-      setErrors(element.name, message);
-    } else {
-      setErrors(element.name, '');
-    }
-  };
+        if (!message) {
+          setErrors(element.name, message);
+        } else {
+          setErrors(element.name, '');
+        }
+      }
+    };
 
   return { handleInput, submitForm, validate };
 };
