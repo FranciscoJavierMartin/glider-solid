@@ -39,8 +39,8 @@ const AuthProvider: ParentComponent = (props) => {
   const authenticateUser = async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(true);
-        // reject('Fail');
+        // resolve(true);
+        reject('Fail');
       }, 1000);
     });
   };

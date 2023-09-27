@@ -24,12 +24,12 @@ const HomeScreen: Component = () => {
       date: new Date(),
     };
 
-    setGlides(
-      'items',
-      produce((items) => {
-        items.unshift(glide);
-      })
-    );
+    // setGlides(
+    //   'items',
+    //   produce((items) => {
+    //     items.unshift(glide);
+    //   })
+    // );
 
     setContent('');
   };
