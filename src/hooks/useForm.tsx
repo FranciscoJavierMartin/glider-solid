@@ -1,4 +1,4 @@
-import { Accessor } from 'solid-js';
+import { Accessor, For, ParentComponent, Show } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 import {
   Form,
@@ -18,6 +18,17 @@ declare module 'solid-js' {
 
 type Validator = (element: HTMLInputElement, ...rest: any[]) => string;
 
+export const FormError: ParentComponent = (props) => {
+  const errors = () => (props.children as string[]) || [];
+  return (
+    <Show when={errors().length > 0}>
+      <div class='flex-it grow text-xs bg-red-400 text-white p-3 pl-3 mt-1 rounded-md'>
+        <For each={errors()}>{(error) => <div>{error}</div>}</For>
+      </div>
+    </Show>
+  );
+};
+
 export const maxLengthValidator: Validator = (
   element: HTMLInputElement,
   maxLength: number = 7
@@ -30,7 +41,7 @@ export const maxLengthValidator: Validator = (
 export const firstUppercaseLetter: Validator = (element: HTMLInputElement) => {
   const { value } = element;
 
-  return value.length
+  return !value.length
     ? ''
     : value[0] !== value[0].toLocaleUpperCase()
     ? `${element.name} first letter should be uppercased`
@@ -65,9 +76,7 @@ const useForm = <T extends Form>(initialForm: T) => {
       for (const validator of validators) {
         const message: string = validator(element, 10);
 
-        if (!message) {
-          setErrors(element.name, message);
-        } else {
+        if (!!message) {
           setErrors(
             produce((errors) => {
               errors[element.name].push(message);
@@ -77,7 +86,7 @@ const useForm = <T extends Form>(initialForm: T) => {
       }
     };
 
-  return { handleInput, submitForm, validate };
+  return { handleInput, submitForm, validate, errors };
 };
 
 export default useForm;

@@ -1,13 +1,14 @@
 import { Component } from 'solid-js';
 import { A } from '@solidjs/router';
 import useForm, {
+  FormError,
   firstUppercaseLetter,
   maxLengthValidator,
 } from '../hooks/useForm';
 import { RegisterForm } from '../types/form';
 
 const RegisterScreen: Component = () => {
-  const { handleInput, submitForm } = useForm<RegisterForm>({
+  const { handleInput, submitForm, validate, errors } = useForm<RegisterForm>({
     fullName: '',
     nickName: '',
     email: '',
@@ -39,9 +40,7 @@ const RegisterScreen: Component = () => {
                       use:validate={[maxLengthValidator, firstUppercaseLetter]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
-                    <div class='flex-it grow text-xs bg-red-400 text-white p-3 pl-3 mt-1 rounded-md'>
-                      Error Error Beep Beep!
-                    </div>
+                    <FormError>{errors['fullName']}</FormError>
                   </div>
 
                   <div class='flex-it py-2'>
@@ -56,6 +55,7 @@ const RegisterScreen: Component = () => {
                       use:validate={[maxLengthValidator]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
+                    <FormError>{errors['nickName']}</FormError>
                   </div>
 
                   <div class='flex-it py-2'>
