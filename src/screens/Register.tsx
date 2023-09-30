@@ -7,9 +7,11 @@ import useForm, {
   minLengthValidator,
   requiredValidator,
 } from '../hooks/useForm';
+import useRegister from '../hooks/useRegister';
 import { RegisterForm } from '../types/form';
 
 const RegisterScreen: Component = () => {
+  const { register } = useRegister();
   const { handleInput, submitForm, validate, errors } = useForm<RegisterForm>({
     fullName: '',
     nickName: '',
@@ -19,7 +21,9 @@ const RegisterScreen: Component = () => {
     passwordConfirmation: '',
   });
 
-  const onFormSubmit = (form: RegisterForm) => {};
+  const onFormSubmit = (form: RegisterForm) => {
+    register(form);
+  };
 
   return (
     <div class='flex-it justify-center items-center h-full'>
