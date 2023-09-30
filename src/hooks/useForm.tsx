@@ -16,7 +16,10 @@ declare module 'solid-js' {
   }
 }
 
-type Validator = (element: HTMLInputElement, ...rest: any[]) => string;
+type Validator = (
+  element: HTMLInputElement,
+  ...rest: any[]
+) => (form: Form) => string;
 type ValidatorConfig = { element: HTMLInputElement; validators: Validator[] };
 
 export const FormError: ParentComponent = (props) => {
@@ -37,39 +40,57 @@ const niceName = (text: string): string => {
     .join(' ');
 };
 
-export const requiredValidator: Validator = (element: HTMLInputElement) => {
-  return element.value.length === 0
-    ? `${niceName(element.name)} is required`
-    : '';
-};
+export const requiredValidator: Validator =
+  (element: HTMLInputElement) =>
+  (form: Form): string => {
+    const { value, name } = element;
 
-export const minLengthValidator: Validator = (
-  element: HTMLInputElement,
-  minLength: number = 7
-) => {
-  return element.value.length === 0 || element.value.length > minLength
-    ? ''
-    : `${niceName(element.name)} should be more than ${minLength} characters`;
-};
+    return value.length === 0 ? `${niceName(name)} is required` : '';
+  };
 
-export const maxLengthValidator: Validator = (
-  element: HTMLInputElement,
-  maxLength: number = 7
-): string => {
-  return !(element.value.length === 0 || element.value.length < maxLength)
-    ? `${niceName(element.name)} should be less than ${maxLength} characters`
-    : '';
-};
+export const minLengthValidator: Validator =
+  (element: HTMLInputElement, minLength: number = 7) =>
+  (form: Form): string => {
+    const { value, name } = element;
 
-export const firstUppercaseLetter: Validator = (element: HTMLInputElement) => {
-  const { value } = element;
+    return value.length === 0 || value.length > minLength
+      ? ''
+      : `${niceName(name)} should be more than ${minLength} characters`;
+  };
 
-  return !value.length
-    ? ''
-    : value[0] !== value[0].toLocaleUpperCase()
-    ? `${niceName(element.name)} first letter should be uppercased`
-    : '';
-};
+export const maxLengthValidator: Validator =
+  (element: HTMLInputElement, maxLength: number = 7) =>
+  (form: Form): string => {
+    const { value, name } = element;
+
+    return !(value.length === 0 || value.length < maxLength)
+      ? `${niceName(name)} should be less than ${maxLength} characters`
+      : '';
+  };
+
+export const firstUppercaseLetter: Validator =
+  (element: HTMLInputElement) =>
+  (form: Form): string => {
+    const { value, name } = element;
+
+    return !value.length
+      ? ''
+      : value[0] !== value[0].toLocaleUpperCase()
+      ? `${niceName(name)} first letter should be uppercased`
+      : '';
+  };
+
+export const compareWith: Validator =
+  (element: HTMLInputElement, fieldName: string) =>
+  (form: Form): string => {
+    const { value, name } = element;
+
+    return !value
+      ? ''
+      : value !== form[fieldName]
+      ? `${niceName(name)} should be same as ${niceName(fieldName)}`
+      : '';
+  };
 
 const useForm = <T extends Form>(initialForm: T) => {
   const [form, setForm] = createStore<T>(initialForm);
@@ -119,7 +140,7 @@ const useForm = <T extends Form>(initialForm: T) => {
       setErrors(element.name, []);
 
       for (const validator of validators) {
-        const message: string = validator(element);
+        const message: string = validator(element)(form);
 
         if (!!message) {
           setErrors(
