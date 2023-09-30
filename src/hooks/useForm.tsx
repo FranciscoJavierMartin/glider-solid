@@ -119,7 +119,7 @@ const useForm = <T extends Form>(initialForm: T) => {
       setErrors(element.name, []);
 
       for (const validator of validators) {
-        const message: string = validator(element, 10);
+        const message: string = validator(element);
 
         if (!!message) {
           setErrors(
