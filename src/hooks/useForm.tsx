@@ -76,6 +76,11 @@ const useForm = <T extends Form>(initialForm: T) => {
   const [errors, setErrors] = createStore<FormErrors>();
   const validatorFields: { [key: string]: ValidatorConfig } = {};
 
+  const isValid = (): boolean => {
+    const keys = Object.keys(errors);
+    return !!keys.length && !keys.some((errorKey) => !!errors[errorKey].length);
+  };
+
   const handleInput = (e: GliderInputEvent): void => {
     const { name, value } = e.currentTarget;
     setForm(name as any, value as any);
@@ -89,7 +94,9 @@ const useForm = <T extends Form>(initialForm: T) => {
         checkValidity(validatorFields[field])();
       }
 
-      submitCallback(form);
+      if (isValid()) {
+        submitCallback(form);
+      }
     };
 
   const validate = (ref: HTMLInputElement, accessor: Accessor<Validator[]>) => {
