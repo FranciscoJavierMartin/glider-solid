@@ -29,8 +29,17 @@ export const FormError: ParentComponent = (props) => {
   );
 };
 
+const niceName = (text: string): string => {
+  return text
+    .split(/(?=[A-Z])/)
+    .map((word) => word[0].toUpperCase() + word.substring(1))
+    .join(' ');
+};
+
 export const requiredValidator: Validator = (element: HTMLInputElement) => {
-  return element.value.length === 0 ? `${element.name} is required` : '';
+  return element.value.length === 0
+    ? `${niceName(element.name)} is required`
+    : '';
 };
 
 export const minLengthValidator: Validator = (
@@ -39,7 +48,7 @@ export const minLengthValidator: Validator = (
 ) => {
   return element.value.length === 0 || element.value.length > minLength
     ? ''
-    : `${element.name} should be more than ${minLength} characters`;
+    : `${niceName(element.name)} should be more than ${minLength} characters`;
 };
 
 export const maxLengthValidator: Validator = (
@@ -47,7 +56,7 @@ export const maxLengthValidator: Validator = (
   maxLength: number = 7
 ): string => {
   return !(element.value.length === 0 || element.value.length < maxLength)
-    ? `${element.name} should be less than ${maxLength} characters`
+    ? `${niceName(element.name)} should be less than ${maxLength} characters`
     : '';
 };
 
@@ -57,7 +66,7 @@ export const firstUppercaseLetter: Validator = (element: HTMLInputElement) => {
   return !value.length
     ? ''
     : value[0] !== value[0].toLocaleUpperCase()
-    ? `${element.name} first letter should be uppercased`
+    ? `${niceName(element.name)} first letter should be uppercased`
     : '';
 };
 
