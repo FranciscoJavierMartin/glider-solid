@@ -4,6 +4,8 @@ import useForm, {
   FormError,
   firstUppercaseLetter,
   maxLengthValidator,
+  minLengthValidator,
+  requiredValidator,
 } from '../hooks/useForm';
 import { RegisterForm } from '../types/form';
 
@@ -37,7 +39,11 @@ const RegisterScreen: Component = () => {
                       name='fullName'
                       id='fullName'
                       onInput={handleInput}
-                      use:validate={[maxLengthValidator, firstUppercaseLetter]}
+                      use:validate={[
+                        maxLengthValidator,
+                        minLengthValidator,
+                        firstUppercaseLetter,
+                      ]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                     <FormError>{errors['fullName']}</FormError>
@@ -52,7 +58,10 @@ const RegisterScreen: Component = () => {
                       name='nickName'
                       id='nickName'
                       onInput={handleInput}
-                      use:validate={[maxLengthValidator]}
+                      use:validate={[
+                        requiredValidator,
+                        (element) => minLengthValidator(element, 4),
+                      ]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                     <FormError>{errors['nickName']}</FormError>
@@ -67,8 +76,10 @@ const RegisterScreen: Component = () => {
                       name='email'
                       id='email'
                       onInput={handleInput}
+                      use:validate={[requiredValidator]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
+                    <FormError>{errors['email']}</FormError>
                   </div>
 
                   <div class='flex-it py-2'>
@@ -80,8 +91,10 @@ const RegisterScreen: Component = () => {
                       name='avatar'
                       id='avatar'
                       onInput={handleInput}
+                      use:validate={[requiredValidator]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
+                    <FormError>{errors['avatar']}</FormError>
                   </div>
 
                   <div class='flex-it py-2'>
@@ -93,8 +106,10 @@ const RegisterScreen: Component = () => {
                       name='password'
                       id='password'
                       onInput={handleInput}
+                      use:validate={[requiredValidator]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
+                    <FormError>{errors['password']}</FormError>
                   </div>
 
                   <div class='flex-it py-2'>
@@ -106,9 +121,11 @@ const RegisterScreen: Component = () => {
                       name='passwordConfirmation'
                       id='passwordConfirmation'
                       onInput={handleInput}
+                      use:validate={[requiredValidator]}
                       class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                     />
                   </div>
+                  <FormError>{errors['passwordConfirmation']}</FormError>
                 </div>
               </div>
               <div class='text-sm text-gray-600 pb-4'>
