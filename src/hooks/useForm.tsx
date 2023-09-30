@@ -17,6 +17,7 @@ declare module 'solid-js' {
 }
 
 type Validator = (element: HTMLInputElement, ...rest: any[]) => string;
+type ValidatorConfig = { element: HTMLInputElement; validators: Validator[] };
 
 export const FormError: ParentComponent = (props) => {
   const errors = () => (props.children as string[]) || [];
@@ -73,6 +74,7 @@ export const firstUppercaseLetter: Validator = (element: HTMLInputElement) => {
 const useForm = <T extends Form>(initialForm: T) => {
   const [form, setForm] = createStore<T>(initialForm);
   const [errors, setErrors] = createStore<FormErrors>();
+  const validatorFields: { [key: string]: ValidatorConfig } = {};
 
   const handleInput = (e: GliderInputEvent): void => {
     const { name, value } = e.currentTarget;
@@ -82,17 +84,25 @@ const useForm = <T extends Form>(initialForm: T) => {
   const submitForm =
     (submitCallback: SubmitCallback<T>) => (e: SubmitFormEvent) => {
       e.preventDefault();
+
+      for (const field in validatorFields) {
+        checkValidity(validatorFields[field])();
+      }
+
       submitCallback(form);
     };
 
   const validate = (ref: HTMLInputElement, accessor: Accessor<Validator[]>) => {
     const validators = accessor() || [];
+    let config: ValidatorConfig;
+    validatorFields[ref.name] = config = { element: ref, validators };
 
-    ref.onblur = checkValidity(ref, validators);
+    ref.onblur = checkValidity(config);
   };
 
   const checkValidity =
-    (element: HTMLInputElement, validators: Validator[]) => () => {
+    ({ element, validators }: ValidatorConfig) =>
+    () => {
       setErrors(element.name, []);
 
       for (const validator of validators) {
