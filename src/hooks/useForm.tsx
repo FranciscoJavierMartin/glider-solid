@@ -105,6 +105,12 @@ const useForm = <T extends Form>(initialForm: T) => {
     validatorFields[ref.name] = config = { element: ref, validators };
 
     ref.onblur = checkValidity(config);
+
+    ref.oninput = () => {
+      if (errors[ref.name]) {
+        checkValidity(config)();
+      }
+    };
   };
 
   const checkValidity =
