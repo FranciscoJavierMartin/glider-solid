@@ -6,16 +6,21 @@ import {
   useContext,
 } from 'solid-js';
 import { createStore } from 'solid-js/store';
+import { onAuthStateChanged } from 'firebase/auth';
 import Loader from '../components/utils/Loader';
+import { User } from '../types/user';
+import { firebaseAuth } from '../db';
 
 type AuthStateContextValues = {
   isAuthenticated: boolean;
   isLoading: boolean;
+  user: User | null;
 };
 
 const initialState = () => ({
   isAuthenticated: false,
   isLoading: true,
+  user: null,
 });
 
 const AuthStateContext = createContext<AuthStateContextValues>();
@@ -26,22 +31,21 @@ const AuthProvider: ParentComponent = (props) => {
   const [store, setStore] = createStore(initialState());
 
   onMount(async () => {
-    try {
-      await authenticateUser();
-      setStore('isAuthenticated', true);
-    } catch (error) {
-      setStore('isAuthenticated', false);
-    } finally {
-      setStore('isLoading', false);
-    }
+    setStore('isLoading', true);
+    listenToAuthChanges();
   });
 
-  const authenticateUser = async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // resolve(true);
-        reject('Fail');
-      }, 1000);
+  const listenToAuthChanges = () => {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      if (user) {
+        setStore('isAuthenticated', true);
+        setStore('user', user as any);
+      } else {
+        setStore('isAuthenticated', false);
+        setStore('user', null);
+      }
+
+      setStore('isAuthenticated', false);
     });
   };
 
