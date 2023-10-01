@@ -41,7 +41,7 @@ const AuthProvider: ParentComponent = (props) => {
 
   const listenToAuthChanges = () => {
     onAuthStateChanged(firebaseAuth, async (user) => {
-      if (user) {
+      if (!!user) {
         const glideUser = await getUser(user.uid);
 
         setStore('isAuthenticated', true);
@@ -55,7 +55,7 @@ const AuthProvider: ParentComponent = (props) => {
         setStore('user', null);
       }
 
-      setStore('isAuthenticated', false);
+      setStore('isLoading', false);
     });
   };
 

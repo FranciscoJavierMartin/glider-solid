@@ -39,10 +39,11 @@ const login = async (loginForm: AuthForm) => {
     loginForm.email,
     loginForm.password
   );
+
   return user;
 };
 
-const authenticate = (form: AuthForm, type: AuthType) => {
+const authenticate = async (form: AuthForm, type: AuthType) => {
   return type === 'login' ? login(form) : register(form as RegisterForm);
 };
 
