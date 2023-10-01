@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 import { RegisterForm } from '../types/form';
 import { db, firebaseAuth } from '../db';
@@ -27,4 +27,8 @@ const registerUser = async (form: RegisterForm) => {
   return registeredUser;
 };
 
-export { registerUser };
+const logout = () => {
+  return signOut(firebaseAuth);
+};
+
+export { registerUser, logout };
