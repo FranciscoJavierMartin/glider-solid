@@ -11,7 +11,7 @@ import useRegister from '../hooks/useRegister';
 import { RegisterForm } from '../types/form';
 
 const RegisterScreen: Component = () => {
-  const { register } = useRegister();
+  const { registerUser } = useRegister();
   const { handleInput, submitForm, validate, errors } = useForm<RegisterForm>({
     fullName: '',
     nickName: '',
@@ -22,7 +22,7 @@ const RegisterScreen: Component = () => {
   });
 
   const onFormSubmit = (form: RegisterForm) => {
-    register(form);
+    registerUser(form);
   };
 
   return (
