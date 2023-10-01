@@ -7,11 +7,11 @@ import useForm, {
   minLengthValidator,
   requiredValidator,
 } from '../hooks/useForm';
-import useRegister from '../hooks/useRegister';
 import { RegisterForm } from '../types/form';
+import useAuth from '../hooks/useAuth';
 
 const RegisterScreen: Component = () => {
-  const { registerUser } = useRegister();
+  const { authUser, isLoading } = useAuth('register');
   const { handleInput, submitForm, validate, errors } = useForm<RegisterForm>({
     fullName: '',
     nickName: '',
@@ -22,7 +22,7 @@ const RegisterScreen: Component = () => {
   });
 
   const onFormSubmit = (form: RegisterForm) => {
-    registerUser(form);
+    authUser(form);
   };
 
   return (
@@ -144,6 +144,7 @@ const RegisterScreen: Component = () => {
               <div class='flex-it py-2'>
                 <button
                   type='submit'
+                  disabled={isLoading()}
                   class='
                   bg-blue-400 hover:bg-blue-500 focus:ring-0
                   disabled:cursor-not-allowed disabled:bg-gray-400
