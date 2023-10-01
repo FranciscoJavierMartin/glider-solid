@@ -4,28 +4,32 @@ import MainLayout from '../layouts/MainLayout';
 import GlidePost from '../components/glides/GlidePost';
 import { Glide } from '../types/glide';
 import { useAuthState } from '../context/auth';
+import { createStore, produce } from 'solid-js/store';
 
 const HomeScreen: Component = () => {
   const [content, setContent] = createSignal<string>('');
-  const [glides, setGlides] = createSignal<Glide[]>([]);
-  const authState = useAuthState()!;
+  const [glides, setGlides] = createStore<{ items: Glide[] }>({ items: [] });
 
   const createGlide = () => {
-    setGlides((prevGlides) => [
-      {
-        id: createUniqueId(),
-        content: content(),
-        user: {
-          nickName: 'John',
-          avatar:
-            'https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png',
-        },
-        likesCount: 0,
-        subglidesCount: 0,
-        date: new Date(),
+    const glide = {
+      id: createUniqueId(),
+      content: content(),
+      user: {
+        nickName: 'John',
+        avatar:
+          'https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png',
       },
-      ...prevGlides,
-    ]);
+      likesCount: 0,
+      subglidesCount: 0,
+      date: new Date(),
+    };
+
+    // setGlides(
+    //   'items',
+    //   produce((items) => {
+    //     items.unshift(glide);
+    //   })
+    // );
 
     setContent('');
   };
@@ -82,7 +86,7 @@ const HomeScreen: Component = () => {
         {/* MESSENGER END */}
       </div>
       <div class='h-px bg-gray-700 my-1' />
-      <For each={glides()}>{(glide) => <GlidePost glide={glide} />}</For>
+      <For each={glides.items}>{(glide) => <GlidePost glide={glide} />}</For>
       {/* HOME PAGE END */}
     </MainLayout>
   );

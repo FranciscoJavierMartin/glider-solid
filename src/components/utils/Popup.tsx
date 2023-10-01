@@ -8,6 +8,7 @@ import {
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import pageSize from '../../reactive/pageSize';
+import useLogout from '../../hooks/useLogout';
 
 type PopupProps = {
   opener: Component;
@@ -15,6 +16,7 @@ type PopupProps = {
 
 const Popup: Component<PopupProps> = ({ opener: Opener }) => {
   const [isOpen, setIsOpen] = createSignal<boolean>(false);
+  const { logoutUser } = useLogout();
   let followTo: HTMLDivElement;
   let popup: HTMLDivElement;
 
@@ -69,7 +71,10 @@ const Popup: Component<PopupProps> = ({ opener: Opener }) => {
           >
             <div class='w-72 min-w-68 max-h-120 min-h-8 flex-it overflow-auto'>
               <div class='flex-it flex-grow flex-shrink py-3'>
-                <div class='flex-it px-4 py-3 transition hover:bg-gray-700'>
+                <div
+                  onClick={logoutUser}
+                  class='flex-it px-4 py-3 transition hover:bg-gray-700'
+                >
                   Logout
                 </div>
               </div>
