@@ -1,13 +1,15 @@
 import { A } from '@solidjs/router';
 import { Component, For, Show } from 'solid-js';
 import { FiMoreHorizontal } from 'solid-icons/fi';
-import { HiOutlinePencilSquare } from 'solid-icons/hi';
 import { links } from './links';
 import Popup from '../utils/Popup';
 import pageSize from '../../reactive/pageSize';
 import { RiDesignQuillPenLine } from 'solid-icons/ri';
+import { useAuthState } from '../../context/auth';
 
 const MainSidebar: Component = () => {
+  const { user } = useAuthState()!;
+
   return (
     <header class='lg:flex-grow flex-it items-end'>
       <div class='xl:w-80 w-20 flex-it'>
@@ -62,14 +64,11 @@ const MainSidebar: Component = () => {
                   <div class='flex-it my-3 items-center flex-row p-3 rounded-3xl hover:bg-gray-800 hover:rounded-3xl transition duration-200 cursor-pointer'>
                     <div class='flex-it'>
                       <div class='w-10 h-10 overflow-visible'>
-                        <img
-                          class='rounded-full'
-                          src='https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png'
-                        />
+                        <img class='rounded-full' src={user?.avatar} />
                       </div>
                     </div>
                     <div class='flex-it xl:flex hidden flex-grow flex-row justify-between items-center'>
-                      <div class='flex-it mx-3 font-bold'>Filip99</div>
+                      <div class='flex-it mx-3 font-bold'>{user?.nickName}</div>
                       <div class='flex-it'>
                         <FiMoreHorizontal />
                       </div>
