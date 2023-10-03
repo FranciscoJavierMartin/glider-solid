@@ -4,11 +4,12 @@ import MainLayout from '../layouts/MainLayout';
 import GlidePost from '../components/glides/GlidePost';
 import { Glide } from '../types/glide';
 import { useAuthState } from '../context/auth';
-import { createStore, produce } from 'solid-js/store';
+import { createStore } from 'solid-js/store';
 
 const HomeScreen: Component = () => {
   const [content, setContent] = createSignal<string>('');
   const [glides, setGlides] = createStore<{ items: Glide[] }>({ items: [] });
+  const { user } = useAuthState()!;
 
   const createGlide = () => {
     const glide = {
@@ -40,10 +41,7 @@ const HomeScreen: Component = () => {
       <div class='flex-it py-1 px-4 flex-row'>
         <div class='flex-it mr-4'>
           <div class='w-12 h-12 overflow-visible cursor-pointer transition duration-200 hover:opacity-80'>
-            <img
-              class='rounded-full'
-              src='https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png'
-            />
+            <img class='rounded-full' src={user?.avatar} />
           </div>
         </div>
         {/* MESSENGER START */}
