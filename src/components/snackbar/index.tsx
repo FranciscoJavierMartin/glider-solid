@@ -1,22 +1,17 @@
 import { Component } from 'solid-js';
 import { IoCloseCircle } from 'solid-icons/io';
+import { SnackbarMessage } from '../../context/ui';
 
-type SnackbarType = 'success' | 'error' | 'warning';
-
-type SnackbarProps = {
-  message: string;
-};
+type SnackbarProps = SnackbarMessage;
 
 export const Snackbar: Component<SnackbarProps> = (props) => {
-  const type: SnackbarType = 'success';
-
   return (
     <div
       class='min-w-68 text-white flex-it font-bold rounded-md md:max-w-xs w-full text-sm shadow-md'
       classList={{
-        'bg-blue-400': type === 'success',
-        'bg-red-700': type === 'error',
-        'bg-yellow-700': type === 'warning',
+        'bg-blue-400': props.type === 'success',
+        'bg-red-700': props.type === 'error',
+        'bg-yellow-500': props.type === 'warning',
       }}
     >
       <div class='flex-it flex-row-reverse p-1'>

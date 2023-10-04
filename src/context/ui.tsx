@@ -1,11 +1,25 @@
 import { Context, ParentComponent, createContext, useContext } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-type UIState = {
-  snackbars: string[];
+type SnackbarType = 'success' | 'error' | 'warning';
+
+export type SnackbarMessage = {
+  message: string;
+  type: SnackbarType;
+  id?: string;
 };
 
-const defaultStore = (): UIState => ({ snackbars: ['Message 1', 'Message 2'] });
+type UIState = {
+  snackbars: SnackbarMessage[];
+};
+
+const defaultStore = (): UIState => ({
+  snackbars: [
+    { message: 'Hello World', type: 'success' },
+    { message: 'Ooop, something wrong', type: 'error' },
+    { message: 'Verify your profile', type: 'warning' },
+  ],
+});
 
 const UIStateContext: Context<UIState> = createContext<UIState>(defaultStore());
 
