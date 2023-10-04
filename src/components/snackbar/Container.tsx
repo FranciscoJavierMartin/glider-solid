@@ -1,0 +1,15 @@
+import { Component } from 'solid-js';
+import { Snackbar } from '.';
+
+const SnackbarContainer: Component = () => {
+  return (
+    <div class='fixed z-50 top-0 right-0 p-4 w-full md:max-w-xs'>
+      <ul class='flex flex-col space-y-2'>
+        <Snackbar />
+        <Snackbar />
+      </ul>
+    </div>
+  );
+};
+
+export default SnackbarContainer;
