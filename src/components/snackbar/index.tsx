@@ -2,7 +2,9 @@ import { Component } from 'solid-js';
 import { IoCloseCircle } from 'solid-icons/io';
 import { SnackbarMessage } from '../../context/ui';
 
-type SnackbarProps = SnackbarMessage;
+type SnackbarProps = SnackbarMessage & {
+  onClose: () => void;
+};
 
 export const Snackbar: Component<SnackbarProps> = (props) => {
   return (
@@ -15,7 +17,7 @@ export const Snackbar: Component<SnackbarProps> = (props) => {
       }}
     >
       <div class='flex-it flex-row-reverse p-1'>
-        <button class='text-xl rounded-full'>
+        <button onClick={props.onClose} class='text-xl rounded-full'>
           <IoCloseCircle />
         </button>
       </div>

@@ -21,6 +21,7 @@ type UIState = {
 
 type UIDispatch = {
   addSnackbar: (s: SnackbarMessage) => void;
+  removeSnackbar: (id: string) => () => void;
 };
 
 const defaultStore = (): UIState => ({
@@ -28,7 +29,10 @@ const defaultStore = (): UIState => ({
 });
 
 const UIStateContext: Context<UIState> = createContext<UIState>(defaultStore());
-const UIDispatchContext = createContext<UIDispatch>({ addSnackbar: () => {} });
+const UIDispatchContext = createContext<UIDispatch>({
+  addSnackbar: () => {},
+  removeSnackbar: (id: string) => () => {},
+});
 
 const UIProvider: ParentComponent = (props) => {
   const [store, setStore] = createStore<UIState>(defaultStore());
@@ -42,9 +46,22 @@ const UIProvider: ParentComponent = (props) => {
     );
   };
 
+  const removeSnackbar = (id: string) => (): void => {
+    setStore(
+      'snackbars',
+      produce((snackbars) => {
+        const index = snackbars.findIndex((snackbar) => snackbar.id === id);
+
+        if (index > -1) {
+          snackbars.splice(index, 1);
+        }
+      })
+    );
+  };
+
   return (
     <UIStateContext.Provider value={store}>
-      <UIDispatchContext.Provider value={{ addSnackbar }}>
+      <UIDispatchContext.Provider value={{ addSnackbar, removeSnackbar }}>
         {props.children}
       </UIDispatchContext.Provider>
     </UIStateContext.Provider>
