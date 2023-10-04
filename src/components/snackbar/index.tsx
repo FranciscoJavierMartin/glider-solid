@@ -17,6 +17,8 @@ type SnackbarProps = SnackbarMessage & {
 export const Snackbar: Component<SnackbarProps> = (initialProps) => {
   const props = mergeProps({ autoHideDuration: 2000 }, initialProps);
   const [duration, setDuration] = createSignal<number>(props.autoHideDuration);
+  const completed = () =>
+    Math.floor((duration() / props.autoHideDuration) * 100);
 
   let timerId: number;
 
@@ -53,7 +55,7 @@ export const Snackbar: Component<SnackbarProps> = (initialProps) => {
       </div>
       <div class='flex-it px-2 pb-3'>{props.message}</div>
       <div
-        style={{ width: `100%` }}
+        style={{ width: `${completed()}%` }}
         class='bg-black opacity-40 text-right h-2'
       ></div>
     </div>
