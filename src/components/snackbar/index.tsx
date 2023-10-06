@@ -55,9 +55,10 @@ export const Snackbar: Component<SnackbarProps> = (initialProps) => {
       </div>
       <div class='flex-it px-2 pb-3'>{props.message}</div>
       <div
+        role='progressbar'
         style={{ width: `${completed()}%` }}
         class='bg-black opacity-40 text-right h-2'
-      ></div>
+      />
     </div>
   );
 };
