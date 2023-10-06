@@ -2,7 +2,9 @@ import { addDoc, collection, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../db';
 import { Glide } from '../types/glide';
 
-const createGlide = async (form: {
+export const getGlides = () => {};
+
+export const createGlide = async (form: {
   content: string;
   uid: string;
 }): Promise<Glide> => {
@@ -21,5 +23,3 @@ const createGlide = async (form: {
 
   return { ...glideToStore, id: added.id };
 };
-
-export { createGlide };
