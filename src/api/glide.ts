@@ -1,7 +1,11 @@
-import { doc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../db';
+import { Glide } from '../types/glide';
 
-const createGlide = (form: { content: string; uid: string }) => {
+const createGlide = async (form: {
+  content: string;
+  uid: string;
+}): Promise<Glide> => {
   const userRef = doc(db, 'users', form.uid);
 
   const glideToStore = {
@@ -12,7 +16,10 @@ const createGlide = (form: { content: string; uid: string }) => {
     date: Timestamp.now(),
   };
 
-  return glideToStore;
+  const glideCollection = collection(db, 'glides');
+  const added = await addDoc(glideCollection, glideToStore);
+
+  return { ...glideToStore, id: added.id };
 };
 
 export { createGlide };
