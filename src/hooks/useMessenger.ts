@@ -11,11 +11,13 @@ const useMessenger = () => {
 
   const handleSubmit = () => {
     const glide = {
-      ...form
-    }
+      ...form,
+    };
+
+    setForm({ content: '' });
   };
 
-  return { handleInput, handleSubmit };
+  return { handleInput, handleSubmit , form};
 };
 
 export default useMessenger;

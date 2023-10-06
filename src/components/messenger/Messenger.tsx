@@ -1,10 +1,19 @@
 import { FaRegularImage } from 'solid-icons/fa';
 import useMessenger from '../../hooks/useMessenger';
 import { useAuthState } from '../../context/auth';
+import { GliderInputEvent } from '../../types/form';
 
 const Messenger = () => {
-  const { handleInput, handleSubmit } = useMessenger();
+  const { handleInput, handleSubmit, form } = useMessenger();
   const { user } = useAuthState()!;
+
+  const autoSize = (e: GliderInputEvent) => {
+    const el = e.currentTarget;
+
+    el.style.height = '0px';
+    const { scrollHeight } = el;
+    el.style.height = scrollHeight + 'px';
+  };
 
   return (
     <div class='flex-it py-1 px-4 flex-row'>
@@ -16,7 +25,11 @@ const Messenger = () => {
       <div class='flex-it flex-grow'>
         <div class='flex-it'>
           <textarea
-            onInput={handleInput}
+            onInput={(e) => {
+              handleInput(e);
+              autoSize(e);
+            }}
+            value={form.content}
             name='content'
             rows='1'
             id='glide'
