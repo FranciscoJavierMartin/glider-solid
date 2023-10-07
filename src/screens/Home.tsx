@@ -11,7 +11,11 @@ const HomeScreen: Component = () => {
     <MainLayout>
       <Messenger onGlideAdded={addGlide} />
       <div class='h-px bg-gray-700 my-1' />
-      <PaginatedGlides pageNumber={pageNumber} pages={store.pages} />
+      <PaginatedGlides
+        pageNumber={pageNumber}
+        pages={store.pages}
+        isLoading={store.isLoading}
+      />
     </MainLayout>
   );
 };
