@@ -1,6 +1,7 @@
-import { createStore } from 'solid-js/store';
-import { Glide } from '../types/glide';
 import { onMount } from 'solid-js';
+import { createStore } from 'solid-js/store';
+import { FirebaseError } from 'firebase/app';
+import { Glide } from '../types/glide';
 import { getGlides } from '../api/glide';
 
 type GlideState = {
@@ -17,8 +18,17 @@ const useGlides = () => {
     loadGlides();
   });
 
-  const loadGlides = () => {
-    getGlides();
+  const loadGlides = async () => {
+    setStore('isLoading', true);
+    try {
+      const { glides } = await getGlides();
+      setStore('glides', glides);
+    } catch (error) {
+      const message = (error as FirebaseError).message;
+      console.log(message);
+    } finally {
+      setStore('isLoading', false);
+    }
   };
 
   return {
