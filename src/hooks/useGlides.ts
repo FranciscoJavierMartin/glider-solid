@@ -31,6 +31,7 @@ const useGlides = () => {
     const _pageNumber = pageNumber();
     setStore('isLoading', true);
 
+    // TODO: Refactor condition
     if (!(_pageNumber > 1 && !store.lastGlide)) {
       try {
         const { glides, lastGlide } = await getGlides(store.lastGlide);
