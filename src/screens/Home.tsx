@@ -5,7 +5,7 @@ import Messenger from '../components/messenger/Messenger';
 import useGlides from '../hooks/useGlides';
 
 const HomeScreen: Component = () => {
-  const { store, pageNumber, addGlide } = useGlides();
+  const { store, pageNumber, addGlide, loadGlides } = useGlides();
 
   return (
     <MainLayout>
@@ -15,6 +15,7 @@ const HomeScreen: Component = () => {
         pageNumber={pageNumber}
         pages={store.pages}
         isLoading={store.isLoading}
+        loadMoreGlides={loadGlides}
       />
     </MainLayout>
   );
