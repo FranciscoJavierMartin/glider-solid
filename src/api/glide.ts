@@ -5,6 +5,8 @@ import {
   DocumentReference,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
   Timestamp,
 } from 'firebase/firestore';
@@ -13,7 +15,8 @@ import { Glide } from '../types/glide';
 import { User } from '../types/user';
 
 export const getGlides = async () => {
-  const q = query(collection(db, 'glides'));
+  const constraints = [orderBy('date', 'desc'), limit(10)];
+  const q = query(collection(db, 'glides'), ...constraints);
   const qSnapshot = await getDocs(q);
 
   const glides = await Promise.all(
