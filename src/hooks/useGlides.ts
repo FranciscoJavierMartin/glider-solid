@@ -31,25 +31,27 @@ const useGlides = () => {
     const _pageNumber = pageNumber();
     setStore('isLoading', true);
 
-    try {
-      const { glides, lastGlide } = await getGlides(store.lastGlide);
+    if (!(_pageNumber > 1 && !store.lastGlide)) {
+      try {
+        const { glides, lastGlide } = await getGlides(store.lastGlide);
 
-      if (glides.length) {
-        setStore(
-          produce((store) => {
-            store.pages[_pageNumber] = { glides };
-          })
-        );
+        if (glides.length) {
+          setStore(
+            produce((store) => {
+              store.pages[_pageNumber] = { glides };
+            })
+          );
 
-        setPageNumber((prev) => prev + 1);
+          setPageNumber((prev) => prev + 1);
+        }
+
+        setStore('lastGlide', lastGlide);
+      } catch (error) {
+        const message = (error as FirebaseError).message;
+        console.log(message);
+      } finally {
+        setStore('isLoading', false);
       }
-
-      setStore('lastGlide', lastGlide);
-    } catch (error) {
-      const message = (error as FirebaseError).message;
-      console.log(message);
-    } finally {
-      setStore('isLoading', false);
     }
   };
 
