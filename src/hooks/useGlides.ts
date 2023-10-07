@@ -42,18 +42,20 @@ const useGlides = () => {
     }
   };
 
-  const addGlide = (glide: Glide) => {
+  const addGlide = (glide: Glide | undefined) => {
     const page = 1;
 
-    setStore(
-      produce((store) => {
-        if (!store.pages[page]) {
-          store.pages[page] = { glides: [] };
-        }
+    if (glide) {
+      setStore(
+        produce((store) => {
+          if (!store.pages[page]) {
+            store.pages[page] = { glides: [] };
+          }
 
-        store.pages[page].glides.unshift({ ...glide });
-      })
-    );
+          store.pages[page].glides.unshift({ ...glide });
+        })
+      );
+    }
   };
 
   return {

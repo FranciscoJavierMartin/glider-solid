@@ -6,7 +6,7 @@ import { Glide } from '../../types/glide';
 import { Component } from 'solid-js';
 
 type MessengerProps = {
-  onGlideAdded: (g: Glide) => void;
+  onGlideAdded: (g: Glide | undefined) => void;
 };
 
 const Messenger: Component<MessengerProps> = (props) => {
@@ -54,9 +54,7 @@ const Messenger: Component<MessengerProps> = (props) => {
             <button
               onClick={async () => {
                 const glide = await handleSubmit();
-                if (glide) {
-                  props.onGlideAdded(glide);
-                }
+                props.onGlideAdded(glide);
               }}
               type='button'
               class='
