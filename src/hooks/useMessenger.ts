@@ -5,7 +5,6 @@ import { useUIDispatch } from '../context/ui';
 import { createSignal } from 'solid-js';
 import { createGlide } from '../api/glide';
 import { FirebaseError } from 'firebase/app';
-import { Glide } from '../types/glide';
 
 const useMessenger = () => {
   const { isAuthenticated, user } = useAuthState()!;
@@ -29,6 +28,11 @@ const useMessenger = () => {
 
       try {
         const newGlide = await createGlide(glide);
+        newGlide.user = {
+          nickName: user!.nickName,
+          avatar: user!.avatar,
+        };
+
         setForm({ content: '' });
         return newGlide;
       } catch (error) {
