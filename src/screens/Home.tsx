@@ -5,11 +5,11 @@ import Messenger from '../components/messenger/Messenger';
 import useGlides from '../hooks/useGlides';
 
 const HomeScreen: Component = () => {
-  const { store, pageNumber } = useGlides();
+  const { store, pageNumber, addGlide } = useGlides();
 
   return (
     <MainLayout>
-      <Messenger />
+      <Messenger onGlideAdded={addGlide} />
       <div class='h-px bg-gray-700 my-1' />
       <For each={Array.from({ length: pageNumber() })}>
         {(_, i) => (

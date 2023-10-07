@@ -5,6 +5,7 @@ import { useUIDispatch } from '../context/ui';
 import { createSignal } from 'solid-js';
 import { createGlide } from '../api/glide';
 import { FirebaseError } from 'firebase/app';
+import { Glide } from '../types/glide';
 
 const useMessenger = () => {
   const { isAuthenticated, user } = useAuthState()!;
@@ -17,7 +18,7 @@ const useMessenger = () => {
     setForm(name, value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isAuthenticated) {
       setIsLoading(true);
 
@@ -27,8 +28,9 @@ const useMessenger = () => {
       };
 
       try {
-        createGlide(glide);
+        const newGlide = await createGlide(glide);
         setForm({ content: '' });
+        return newGlide;
       } catch (error) {
         const message = (error as FirebaseError).message;
         addSnackbar({ message, type: 'error' });

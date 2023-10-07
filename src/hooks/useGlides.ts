@@ -42,10 +42,25 @@ const useGlides = () => {
     }
   };
 
+  const addGlide = (glide: Glide) => {
+    const page = 1;
+
+    setStore(
+      produce((store) => {
+        if (!store.pages[page]) {
+          store.pages[page] = { glides: [] };
+        }
+
+        store.pages[page].glides.unshift({ ...glide });
+      })
+    );
+  };
+
   return {
     pageNumber,
     loadGlides,
     store,
+    addGlide,
   };
 };
 
