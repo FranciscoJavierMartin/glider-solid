@@ -2,8 +2,14 @@ import { FaRegularImage } from 'solid-icons/fa';
 import useMessenger from '../../hooks/useMessenger';
 import { useAuthState } from '../../context/auth';
 import { GliderInputEvent } from '../../types/form';
+import { Glide } from '../../types/glide';
+import { Component } from 'solid-js';
 
-const Messenger = () => {
+type MessengerProps = {
+  onGlideAdded: (g: Glide | undefined) => void;
+};
+
+const Messenger: Component<MessengerProps> = (props) => {
   const { handleInput, handleSubmit, form } = useMessenger();
   const { user } = useAuthState()!;
 
@@ -46,7 +52,10 @@ const Messenger = () => {
           </div>
           <div class='flex-it w-32 mt-3 cursor-pointer'>
             <button
-              onClick={handleSubmit}
+              onClick={async () => {
+                const glide = await handleSubmit();
+                props.onGlideAdded(glide);
+              }}
               type='button'
               class='
                       disabled:cursor-not-allowed disabled:bg-gray-400

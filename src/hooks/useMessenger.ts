@@ -17,7 +17,7 @@ const useMessenger = () => {
     setForm(name, value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isAuthenticated) {
       setIsLoading(true);
 
@@ -27,8 +27,14 @@ const useMessenger = () => {
       };
 
       try {
-        createGlide(glide);
+        const newGlide = await createGlide(glide);
+        newGlide.user = {
+          nickName: user!.nickName,
+          avatar: user!.avatar,
+        };
+
         setForm({ content: '' });
+        return newGlide;
       } catch (error) {
         const message = (error as FirebaseError).message;
         addSnackbar({ message, type: 'error' });

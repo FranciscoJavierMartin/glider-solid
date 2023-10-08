@@ -1,18 +1,23 @@
 import { Component, For } from 'solid-js';
-import { createStore } from 'solid-js/store';
 import MainLayout from '../layouts/MainLayout';
 import GlidePost from '../components/glides/GlidePost';
 import Messenger from '../components/messenger/Messenger';
-import { Glide } from '../types/glide';
+import useGlides from '../hooks/useGlides';
 
 const HomeScreen: Component = () => {
-  const [glides, setGlides] = createStore<{ items: Glide[] }>({ items: [] });
+  const { store, pageNumber, addGlide } = useGlides();
 
   return (
     <MainLayout>
-      <Messenger />
+      <Messenger onGlideAdded={addGlide} />
       <div class='h-px bg-gray-700 my-1' />
-      <For each={glides.items}>{(glide) => <GlidePost glide={glide} />}</For>
+      <For each={Array.from({ length: pageNumber() })}>
+        {(_, i) => (
+          <For each={store.pages[i() + 1]?.glides}>
+            {(glide) => <GlidePost glide={glide} />}
+          </For>
+        )}
+      </For>
     </MainLayout>
   );
 };
