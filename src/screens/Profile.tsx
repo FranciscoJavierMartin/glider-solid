@@ -1,14 +1,11 @@
 import { Component, For } from 'solid-js';
 import MainLayout from '../layouts/MainLayout';
 import { useAuthState } from '../context/auth';
-
-const users = [
-  { avatar: 'https://thrangra.sirv.com/Avatar1.png', nickName: 'Felipe' },
-  { avatar: 'https://thrangra.sirv.com/Avatar2.png', nickName: 'Anna' },
-];
+import useUsers from '../hooks/useUsers';
 
 const ProfileScreen: Component = () => {
   const authState = useAuthState()!;
+  const { users } = useUsers();
 
   return (
     <MainLayout pageTitle='Profile'>
@@ -30,7 +27,7 @@ const ProfileScreen: Component = () => {
             </div>
           </div>
         </div>
-        <For each={users}>
+        <For each={users()}>
           {(user) => (
             <div class='flex-it p-4'>
               <div class='flex-it flex-row'>
