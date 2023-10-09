@@ -15,18 +15,18 @@ export const links = [
     icon: CgProfile,
   },
   {
-    name: 'More',
-    href: '/more',
-    icon: CgMoreO,
-  },
-  {
-    name: 'Login',
-    href: '/auth/login',
+    name: 'Notifications',
+    href: '/',
     icon: IoNotificationsCircleOutline,
   },
   {
-    name: 'Register',
-    href: '/auth/register',
+    name: 'More',
+    href: '/',
+    icon: CgMoreO,
+  },
+  {
+    name: 'Discover',
+    href: '/',
     icon: RiMapCompassDiscoverLine,
   },
 ];
